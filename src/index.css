@@ -1,0 +1,121 @@
+h1 {
+    text-align: center;
+}
+
+.bg-gray {
+    background-color: #F7F7F7 !important;
+}
+
+.text-black {
+    color: #3A3A3D !important;
+}
+
+.btn-success {
+    background-color: #4AA35A !important;
+}
+
+
+.text-success {
+    color: #4AA35A !important;
+    border-color: red !important;
+}
+
+.auth-conatiner {
+    background-image: url('assets/cover.svg');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+
+.overlay-auth {
+    background: linear-gradient(45deg, rgba(55, 140, 47, 0.7), rgba(0, 0, 0, 0.5));
+
+}
+
+
+
+form .input-group-text.bg-gray {
+    width: 40px;
+}
+
+.form-control:focus {
+    border-color: #4aa35a !important;
+    box-shadow: 0 0 0 .25rem rgb(74 163 90 / 25%) !important;
+}
+
+.container-sidebar {
+    height: 100vh;
+    background-color: #1F263E;
+    margin-left: -20px;
+    border-radius: 0 40px 0 0;
+    height: 100 vh
+
+    ;
+}
+
+
+.navlogo {
+    width: 150px !important;
+}
+
+ul.css-ewdv3l li:first-child a {
+    background-color: transparent !important;
+}
+
+ul.css-ewdv3l li:first-child a:hover {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.css-1wvake5 {
+    border: none !important;
+}
+
+.css-dip3t8 {
+    background-color: transparent !important;
+}
+
+
+.header {
+    background-color: #009247;
+    min-height: 160px;
+    border-radius: 10px;
+    background-size: cover;
+    background-image: url("assets/bg.svg");
+}
+
+.table-striped>tbody>tr:nth-of-type(odd)>* {
+    background-color: #F8F9FB;
+}
+
+.table>:not(caption)>*>* {
+    box-shadow: none !important;
+}
+
+thead th {
+    background-color: #E2E5EB !important
+}
+
+.deleteconfirmatin.modal-header {
+    display: flex;
+    justify-content: end;
+}
+
+.css-1qkeeaw>.ps-menu-button {
+
+    transition: 0.4s all ease-in-out;
+}
+
+.css-1qkeeaw>.ps-menu-button:hover {
+    background-color: #0092471A !important;
+    border-left: 10px solid #009247;
+    transition: 0.4s all ease-in-out;
+
+}
+
+
+.bg-darkgray {
+    background-color: #1F263E;
+    border-radius: 0 40px 0 0;
+}
