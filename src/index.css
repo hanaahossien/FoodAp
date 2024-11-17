@@ -3,22 +3,14 @@ h1 {
 }
 
 .bg-gray {
-    background-color: #F7F7F7 !important;
+    background-color: #0f131f0f  !important;
 }
 
 .text-black {
     color: #3A3A3D !important;
 }
 
-.btn-success {
-    background-color: #4AA35A !important;
-}
 
-
-.text-success {
-    color: #4AA35A !important;
-    border-color: red !important;
-}
 
 .auth-conatiner {
     background-image: url('assets/cover.svg');
@@ -49,7 +41,10 @@ form .input-group-text.bg-gray {
     background-color: #1F263E;
     margin-left: -20px;
     border-radius: 0 40px 0 0;
-    height: 100 vh
+    height: 100 vh;
+    position: sticky;
+    top: 0;
+    left: 0;
 
     ;
 }
