@@ -6,11 +6,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function Login({saveloginData}) {
-  // hana88
-  // hanaa.hossien88@gmail.com
-  // @Password321!
-
+export default function VerifyAccount() {
   let navigate = useNavigate();
   let {
     register,
@@ -19,28 +15,21 @@ export default function Login({saveloginData}) {
   } = useForm();
   let onSubmite = async (data) => {
     try {
-      let req = await axios.post(
-        "https://upskilling-egypt.com:3006/api/v1/Users/Login",
+      let req = await axios.put(
+        "https://upskilling-egypt.com:3006/api/v1/Users/verify",
         data
       );
+      console.log(req);
+      console.log(data);
 
-      localStorage.setItem("token", req.data.token)
-      saveloginData()
       toast.success(req.data.message);
-
-
-      navigate("/dashboard");
     } catch (error) {
       toast.error(error.response.data.message);
     }
   };
-
   return (
-
-
-
     <>
-     {/* // "email": "nadia.mohamed.taha166@gmail.com",
+      {/* // "email": "nadia.mohamed.taha166@gmail.com",
     // "password": "@Password321!" */}
 
       <div className="auth-conatiner">
@@ -52,9 +41,9 @@ export default function Login({saveloginData}) {
               </div>
               <div className="py-4">
                 <div className="my-3">
-                  <h3 className="h5">Log In</h3>
+                  <h3 className="h5">verify your account</h3>
                   <span className="text-muted">
-                    Welcome Back! Please enter your details
+                    Please Add Your verification code
                   </span>
                 </div>
                 <form onSubmit={handleSubmit(onSubmite)}>
@@ -62,7 +51,8 @@ export default function Login({saveloginData}) {
                     <div className="input-group  mb-1">
                       <span
                         className="input-group-text border-0 bg-gray"
-                        id="basic-addon1"  >
+                        id="basic-addon1"
+                      >
                         <i className="fa-regular fa-envelope"></i>
                       </span>
                       <input
@@ -93,40 +83,23 @@ export default function Login({saveloginData}) {
                         <i className="fa-solid fa-mobile-screen"></i>
                       </span>
                       <input
-                        type="password"
+                        type="text"
                         className="form-control border-top-0  bg-gray border-bottom-0  border-end-0"
-                        placeholder="Password"
-                        {...register("password", {
-                          required: "password is requird",
+                        placeholder="verification code"
+                        {...register("code", {
+                          required: "code is requird",
                         })}
                       />
                     </div>
                     <div>
-                      {errors.password && (
-                        <pan className="text-danger">
-                          {errors.password.message}
-                        </pan>
+                      {errors.code && (
+                        <pan className="text-danger">{errors.code.message}</pan>
                       )}
                     </div>
                   </div>
 
-                  <div className="d-flex justify-content-between">
-                    <Link
-                      className="fs-6 text-decoration-none text-black"
-                      to="/Registration"
-                    >
-                      Register Now?
-                    </Link>
-                    <Link
-                      className="fs-6 text-decoration-none text-success"
-                      to="/Forget-Password"
-                    >
-                      Forget Password?
-                    </Link>
-                  </div>
                   <button className="btn btn-success  w-100 my-3">
-
-                    Login
+                    verify
                   </button>
                 </form>
               </div>

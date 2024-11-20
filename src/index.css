@@ -3,7 +3,7 @@ h1 {
 }
 
 .bg-gray {
-    background-color: #0f131f0f  !important;
+    background-color: #0f131f0f !important;
 }
 
 .text-black {
@@ -114,3 +114,59 @@ thead th {
     background-color: #1F263E;
     border-radius: 0 40px 0 0;
 }
+
+.recipe .form-control,
+.recipe select {
+    background-color: #F7F7F7 !important;
+    border: none;
+    padding: 0.7rem;
+
+}
+
+.recipe ::placeholder {
+    color: #00000033 !important;
+    opacity: 1;
+    /* Firefox */
+}
+
+.recipe input.file {
+    background: #F1FFF0 !important;
+    padding: 50px;
+    border: 1px solid #009247;
+    border-style:dashed;
+
+}
+
+
+.upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .upload-btn-wrapper .btn {
+    background: #F1FFF0 !important;
+    padding: 10px 0 10px 0;
+    border: 1px solid #009247;
+    border-style: dashed;
+    width: 100%;
+  }
+
+  .upload-btn-wrapper .btn:before {
+    content: "\e09a";  /* this is your text. You can also use UTF-8 character codes as I do here */
+    font-family: FontAwesome;
+    left:20px;
+    position:absolute;
+    top:0;
+    top:10px;
+    color:#009247
+ }
+
+  .upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+  }

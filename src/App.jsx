@@ -15,6 +15,8 @@ import User from "./Modules/user/component/User/User";
 import { ToastContainer } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
 import ProtectedRout from "./Modules/shared/components/ProtectedRout/ProtectedRout";
+import RecipeForm from "./Modules/recipe/components/RecipeForm/RecipeForm";
+import VerifyAccount from "./Modules/authentication/components/VerifyAccount/VerifyAccount";
 
 export default function App() {
   const [loginData, setLoginData] = useState("null");
@@ -24,15 +26,12 @@ export default function App() {
     let enctoken = jwtDecode(dectoken);
     setLoginData(enctoken);
     console.log(enctoken);
-
   };
 
   useEffect(() => {
-if(localStorage.getItem("token"))
-{
-  saveloginData()
-}
-
+    if (localStorage.getItem("token")) {
+      saveloginData();
+    }
   }, []);
   const routers = createBrowserRouter([
     {
@@ -41,7 +40,7 @@ if(localStorage.getItem("token"))
       children: [
         {
           index: true,
-          element: <Login  saveloginData={saveloginData}/>,
+          element: <Login saveloginData={saveloginData} />,
         },
         {
           path: "Forget-Password",
@@ -49,7 +48,7 @@ if(localStorage.getItem("token"))
         },
         {
           path: "Login",
-          element: <Login  saveloginData={saveloginData}/>,
+          element: <Login saveloginData={saveloginData} />,
         },
         {
           path: "Registration",
@@ -59,23 +58,40 @@ if(localStorage.getItem("token"))
           path: "Reset-Password",
           element: <ResetPass />,
         },
+        { path: "verify-account", element: <VerifyAccount /> }
+
       ],
     },
     {
       path: "DashBoard",
-      element: <ProtectedRout saveloginData={saveloginData}>  <MasteraLayout  loginData={loginData}/> </ProtectedRout>,
+      element: (
+        <ProtectedRout saveloginData={saveloginData}>
+          {" "}
+          <MasteraLayout loginData={loginData} />{" "}
+        </ProtectedRout>
+      ),
       children: [
         {
           index: true,
-          element: <DashBoard  loginData={loginData}/>,
+          element: <DashBoard loginData={loginData} />,
         },
         {
           path: "Categories-List",
-          element: <CategoriesList/>,
+          element: <CategoriesList />,
+        },
+        { path: "Recipe-List/Registration", element: <Registration /> },
+
+        {
+          path: "Recipe-List/new-recipe",
+          element: <RecipeForm />,
+        },
+        {
+          path: "Recipe-List/:recipeId",
+          element: <RecipeForm />,
         },
         {
           path: "Categories-Data",
-          element: <CategoriesData   saveloginData={saveloginData}/>,
+          element: <CategoriesData saveloginData={saveloginData} />,
         },
         {
           path: "Recipe-List",

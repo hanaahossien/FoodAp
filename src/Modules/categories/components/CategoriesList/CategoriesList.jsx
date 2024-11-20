@@ -32,14 +32,15 @@ export default function CategoriesList() {
   let onSubmitupdate = async (data) => {
     console.log(idUpdate);
     try {
-      let nameCat = await axios.put(
+      await axios.put(
         `https://upskilling-egypt.com:3006/api/v1/Category/${idUpdate}`,
         data,
         { headers: { Authorization: localStorage.getItem("token") } }
       );
       handleCloseUpdate();
       getCategoriesList();
-toast.warning("updated sucssed")    } catch (error) {
+      toast.warning("updated sucssed");
+    } catch (error) {
       console.log(error);
     }
   };

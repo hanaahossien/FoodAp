@@ -21,7 +21,8 @@ let navigate=useNavigate()
         data
       );
       toast.success(response.data.message);
-      navigate('/ResetPass')
+
+      navigate('/Reset-Password')
     } catch (error) {
       toast.error(error.response.data.message)
     }
