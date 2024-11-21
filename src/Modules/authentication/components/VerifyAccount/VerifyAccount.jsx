@@ -1,24 +1,26 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../../assets/logo.svg";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { axiosInstance, users } from "../../../../services/apiUrls/apiUrl";
+import React from "react";
+import { useLocation } from "react-router-dom";
 
 export default function VerifyAccount() {
-  let navigate = useNavigate();
+const location= useLocation()
   let {
     register,
-    formState: { errors },
+    formState: { errors ,isSubmitting},
     handleSubmit,
-  } = useForm();
+  } = useForm({defaultValues:{email:location.state}});
   let onSubmite = async (data) => {
     try {
-      let req = await axios.put(
-        "https://upskilling-egypt.com:3006/api/v1/Users/verify",
-        data
-      );
+      // let req = await axios.put(
+      //   "https://upskilling-egypt.com:3006/api/v1/Users/verify",
+      //   data
+      // );
+      let req = await axiosInstance.put(users.verifyUser,data)
       console.log(req);
       console.log(data);
 
@@ -57,6 +59,7 @@ export default function VerifyAccount() {
                       </span>
                       <input
                         type="email"
+                        disabled
                         className="form-control border-top-0  bg-gray border-bottom-0  border-end-0"
                         placeholder="Enter your E-mail"
                         {...register("email", {
@@ -98,8 +101,8 @@ export default function VerifyAccount() {
                     </div>
                   </div>
 
-                  <button className="btn btn-success  w-100 my-3">
-                    verify
+                  <button disabled={isSubmitting} className="btn btn-success  w-100 my-3">
+                  {isSubmitting ? "sending ....":"verify"}
                   </button>
                 </form>
               </div>

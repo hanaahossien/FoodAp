@@ -1,65 +1,59 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../../assets/logo.svg";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import React from "react";
 
-export default function Login() {
+import { axiosInstance, users } from "../../../../services/apiUrls/apiUrl";
+
+export default function Registration() {
   // hana88
   // hanaa.hossien88@gmail.com
   // @Password32!
 
   let {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm();
   let navigate = useNavigate();
 
   let profileImage = document.getElementById("profileImage");
-      let img = document.querySelector('.uploadimg');
+  const [isPaswordVisble, setIsPaswordVisble] = useState(false);
+  const [isConfPaswordVisble, setIsConfPaswordVisble] = useState(false);
 
   const [file, setFile] = useState("");
   function handleChange(e) {
     console.log(e.target.files);
     setFile(URL.createObjectURL(e.target.files[0]));
-
-}
+  }
   let onSubmite = async (data) => {
-    let url = URL.createObjectURL(profileImage.files[0]);
-    let img = document.querySelector('.uploadimg');
-    img.src = url;
-    console.log(url);
-
     let formata = new FormData();
     formata.append("userName", data.userName);
     formata.append("email", data.email);
     formata.append("country", data.country);
     formata.append("phoneNumber", data.phoneNumber);
-    formata.append("profileImage", profileImage.files[0], ".jpg");
+    formata.append("profileImage", profileImage?.files[0]);
     formata.append("password", data.password);
     formata.append("confirmPassword", data.confirmPassword);
-    navigate("/verify-account");
 
     try {
       console.log(formata);
-      let req = await axios.post(
-        "https://upskilling-egypt.com:3006/api/v1/Users/Register",
-        formata
-      );
+      // let req = await axios.post(
+      //   "https://upskilling-egypt.com:3006/api/v1/Users/Register",
+      //   formata
+      // );
+      let req = await axiosInstance.post(users.createUser, formata);
       console.log(req);
-      toast.success(req.data.message)
-
+      toast.success(req.data.message);
+      navigate("/verify-account", { state: data.email });
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     }
     //  toast.success(req.data.message);
-
-
   };
-
 
   /* // "email": "nadia.mohamed.taha166@gmail.com",
     // "password": "@Password321!" */
@@ -67,7 +61,7 @@ export default function Login() {
 
   return (
     <>
-      <div className="auth-conatiner " style={{"backgroundImage":"none"}}>
+      <div className="auth-conatiner " style={{ backgroundImage: "none" }}>
         <div className="container-fluid overlay-auth">
           <div className="row vh-100 justify-content-around align-items-center">
             <div className="col-md-10  col-sm-8 col-8 bg-white rounded rounded-2 px-5 py-4  ">
@@ -89,7 +83,8 @@ export default function Login() {
                           className="input-group-text border-0 bg-gray"
                           id="basic-addon1"
                         >
-<i className="fa-regular fa-user"></i>                        </span>
+                          <i className="fa-regular fa-user"></i>
+                        </span>
                         <input
                           type="text"
                           className="form-control border-top-0  bg-gray border-bottom-0  border-end-0"
@@ -167,8 +162,8 @@ export default function Login() {
                     <div className=" col-md-6  mb-2">
                       <div className="input-group mb-1 ">
                         <span className="input-group-text border-0 bg-gray">
-                          <i className="fa-solid fa-mobile-screen"></i>
-                        </span>
+                        <i className="fa-solid fa-earth-americas"></i>
+                                                </span>
                         <input
                           type="text"
                           className="form-control border-top-0  bg-gray border-bottom-0  border-end-0"
@@ -190,15 +185,31 @@ export default function Login() {
                     <div className=" col-md-6  mb-2">
                       <div className="input-group mb-1 ">
                         <span className="input-group-text border-0 bg-gray">
-                        <i className="fa-solid fa-unlock-keyhole"></i>                        </span>
+                          <i className="fa-solid fa-unlock-keyhole"></i>
+                        </span>
                         <input
-                          type="password"
+                          type={isPaswordVisble ? "text" : "password"}
                           className="form-control border-top-0  bg-gray border-bottom-0  border-end-0"
                           placeholder="Password"
                           {...register("password", {
                             required: "password is requird",
                           })}
                         />
+                        <button
+                          onClick={() => {
+                            setIsPaswordVisble((prev) => !prev);
+                          }}
+                          onMouseUp={(e) => {
+                            e.preventDefault();
+                          }}
+                          onMouseDown={(e) => {
+                            e.preventDefault();
+                          }}
+                          type="button"
+                          className="input-group-text border-0 bg-gray"
+                        >
+                          <i className="fa-solid fa-eye-slash"></i>
+                        </button>
                       </div>
                       <div>
                         {errors.password && (
@@ -212,16 +223,33 @@ export default function Login() {
                     <div className=" col-md-6  mb-2">
                       <div className="input-group mb-1 ">
                         <span className="input-group-text border-0 bg-gray">
-                        <i className="fa-solid fa-unlock-keyhole"></i>                        </span>
+                          <i className="fa-solid fa-unlock-keyhole"></i>
+                        </span>
                         <input
-                          type="password"
+                          type={!isConfPaswordVisble? "password":"text"}
                           className="form-control border-top-0  bg-gray border-bottom-0  border-end-0"
                           placeholder="confirm-Password"
                           {...register("confirmPassword", {
                             required: "confirm Password  is requird",
                           })}
                         />
+                        <button
+                          onClick={() => {
+                            setIsConfPaswordVisble((prev) => !prev);
+                          }}
+                          onMouseUp={(e) => {
+                            e.preventDefault();
+                          }}
+                          onMouseDown={(e) => {
+                            e.preventDefault();
+                          }}
+                          type="button"
+                          className="input-group-text border-0 bg-gray"
+                        >
+                          <i className="fa-solid fa-eye-slash"></i>
+                        </button>
                       </div>
+
                       <div>
                         {errors.confirmPassword && (
                           <pan className="text-danger">
@@ -231,25 +259,29 @@ export default function Login() {
                       </div>
                     </div>
 
-                    <div className="mb-3 col-md-6">
-                    <div className="upload-btn-wrapper">
-                      <input
-                        type="file"
-                        id="profileImage"
-                        {...register("profileImage")}
-                        className="form-control file " onChange={handleChange}
+                    <div className="mb-0 col-md-12">
+                      <div className="upload-btn-wrapper">
+                        <input
+                          type="file"
+                          id="profileImage"
+                          {...register("profileImage")}
+                          className="form-control file "
+                          onChange={handleChange}
+                        />
+                        <button className="btn form-control">
 
-                      />
-                      <button className="btn form-control"> Choose a Item Image to Upload</button>
-
-
+                          Choose a Item Image to Upload
+                        </button>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="mb-3 col-md-6">
-                  <img className="uploadimg mt-2 rounded-2" width="40" src={file} />
-
-</div>
+                    <div className="mb-1 col-md-6">
+                      <img
+                        className="uploadimg mt-2 rounded-2"
+                        width="60"
+                        src={file}
+                      />
+                    </div>
                   </div>
 
                   <div className="w-100 text-end">
@@ -261,8 +293,11 @@ export default function Login() {
                     </Link>
                   </div>
                   <div className="d-flex justify-content-center">
-                    <button className="btn btn-success  w-50 my-3">
-                    Registration
+                    <button
+                      disabled={isSubmitting}
+                      className="btn btn-success  w-50 my-3"
+                    >
+                      {isSubmitting ? "sending ...." : "Registration"}
                     </button>
                   </div>
                 </form>
