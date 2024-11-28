@@ -17,8 +17,22 @@ import { jwtDecode } from "jwt-decode";
 import ProtectedRout from "./Modules/shared/components/ProtectedRout/ProtectedRout";
 import RecipeForm from "./Modules/recipe/components/RecipeForm/RecipeForm";
 import VerifyAccount from "./Modules/authentication/components/VerifyAccount/VerifyAccount";
+import ChangePassword from "./Modules/authentication/components/ChangePassword/ChangePassword";
 
 export default function App() {
+
+  const items = document.querySelectorAll('.pagination li');
+
+  items .forEach(item => {
+    item.addEventListener("click", function() {
+     items .forEach(a=>{
+        a.classList.remove("active");
+      });
+       item.classList.add("active");
+     item.style.display = 'block';
+
+    });
+  });
   const [loginData, setLoginData] = useState("null");
 
   let saveloginData = () => {
@@ -45,6 +59,10 @@ export default function App() {
         {
           path: "Forget-Password",
           element: <ForgetPass />,
+        },
+        {
+          path: "change-password",
+          element: <ChangePassword/>
         },
         {
           path: "Login",
@@ -105,6 +123,7 @@ export default function App() {
           path: "User",
           element: <User />,
         },
+
       ],
     },
   ]);

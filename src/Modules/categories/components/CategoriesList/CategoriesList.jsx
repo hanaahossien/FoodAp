@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../../shared/components/Header/Header";
 import NoData from "../../../shared/components/NoData/NoData";
+import {
+  axiosInstance,
+  category,
+} from "../../../../services/apiUrls/apiUrl.js";
 
 import axios from "axios";
 import DeleteConfirmation from "../../../shared/components/DeleteConfirmation/DeleteConfirmation";
@@ -9,8 +13,6 @@ import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
 
 export default function CategoriesList() {
-  const [searchString, setSearchString] = useState("");
-
   const {
     register,
     setValue,
@@ -37,9 +39,9 @@ export default function CategoriesList() {
         data,
         { headers: { Authorization: localStorage.getItem("token") } }
       );
+      toast.success("updated sucssed");
+      getCategoriesList(5, 1, "");
       handleCloseUpdate();
-      getCategoriesList();
-      toast.warning("updated sucssed");
     } catch (error) {
       console.log(error);
     }
@@ -67,19 +69,30 @@ export default function CategoriesList() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = (selectedId) => {
-    setShow(true);
     setId(selectedId);
+    setShow(true);
+
   };
 
+  const [searchName, setSearchName] = useState("");
+  const [totalNumberOfPages, settotalNumberOfPages] = useState(0);
+
+  let GetName = (e) => {
+    setSearchName(e.target.value);
+    getCategoriesList(10, 1, e.target.value);
+  };
   const [CategoriesList, setCategoriesList] = useState([]);
-  let getCategoriesList = async () => {
+  let getCategoriesList = async (pageSize, pageNumber, name) => {
     try {
-      let response = await axios.get(
-        "https://upskilling-egypt.com:3006/api/v1/Category/?pageSize=20&pageNumber=1",
-        { headers: { Authorization: localStorage.getItem("token") } }
+      let response = await axiosInstance.get(
+        category.getAllCategory(pageSize, pageNumber, name)
+      );
+      settotalNumberOfPages(
+        Array(response.data.totalNumberOfPages)
+          .fill()
+          .map((_, i) => i + 1)
       );
       setCategoriesList(response.data.data);
-      console.log(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -91,17 +104,19 @@ export default function CategoriesList() {
         `https://upskilling-egypt.com:3006/api/v1/Category/${id}`,
         { headers: { Authorization: localStorage.getItem("token") } }
       );
-      getCategoriesList();
+       handleClose();
 
-      handleClose();
-      toast.error("this category deleted ");
+       getCategoriesList(5, 1, "");
+       toast.success("this category deleted ");
+
     } catch (error) {
       console.log(error);
     }
   };
 
+
   useEffect(() => {
-    getCategoriesList();
+    getCategoriesList(5, 1, "");
   }, []);
   // const [newCategory, setnewCategory] = useState("")
   let onSubmit = async (data) => {
@@ -144,6 +159,7 @@ export default function CategoriesList() {
             </div>
           </Modal.Title>
         </Modal.Header>
+
         <Modal.Body>
           <form className=" px-4">
             <div>
@@ -232,9 +248,24 @@ export default function CategoriesList() {
         }
       />
 
+      <div className="my-5">
+        <div className="row justify-content-center g-2">
+          <div className="col-md-6">
+            <div className="">
+              <input
+                type="text"
+                className="form-control form-control-lg "
+                placeholder="Search here by categories ..."
+                onChange={GetName}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="d-flex justify-content-between align-items-center my-3">
         <div>
-          <h3>Recipe Table Details</h3>
+          <h3>Categories Table Details</h3>
           <span>You can check all details</span>
         </div>
         <div>
@@ -300,6 +331,23 @@ export default function CategoriesList() {
               </tbody>
             </table>
           </div>
+
+          <nav aria-label="...">
+            <ul className="pagination " >
+              {totalNumberOfPages.map((p) => (
+                <li
+                  key={p}
+                  className="page-item "
+
+                  onClick={() => {
+                    getCategoriesList(5, p, "");
+                  }}
+                >
+                  <span  className="page-link">{p}</span>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       ) : (
         <NoData />

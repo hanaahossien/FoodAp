@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { useForm } from "react-hook-form";
 import logo from "../../../../assets/logo.svg";
 import axios from "axios";

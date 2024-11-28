@@ -12,7 +12,7 @@ export default function MasteraLayout({loginData}) {
         <div className="h-100 bg-darkgray" >
           <SideBar/>
         </div>
-          <div className="w-100 px-3">
+          <div className="w-100 px-4">
             <Navbar loginData={loginData} />
 
             <Outlet />

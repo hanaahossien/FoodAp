@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function RecipeForm() {
+  let navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -12,6 +13,7 @@ export default function RecipeForm() {
   } = useForm();
 
   const params = new useParams();
+
   let paramId = params.recipeId;
 
   const onSubmit = async (data) => {
@@ -24,12 +26,12 @@ export default function RecipeForm() {
     formdat.append("recipeImage", data?.recipeImage[0]);
     console.log(formdat);
     try {
-      const response = await axios.post(
-        "https://upskilling-egypt.com:3006/api/v1/Recipe/",
+       await axios.post(
+        `https://upskilling-egypt.com:3006/api/v1/Recipe/`,
         formdat,
         { headers: { Authorization: localStorage.getItem("token") } }
       );
-      console.log(response);
+      navigate("/dashboard/Recipe-List");
     } catch (error) {
       console.log(error);
     }
@@ -44,7 +46,6 @@ export default function RecipeForm() {
         { headers: { Authorization: localStorage.getItem("token") } }
       );
       setCategoriesList(response.data.data);
-      console.log(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -65,27 +66,25 @@ export default function RecipeForm() {
     getCategoriesList();
     getTag();
 
-    if (params != "new-recipe") {
-      let getRecipe = async() => {
-       let response=await axios.get(
+    if (paramId != "new-recipe") {
+      let getRecipe = async () => {
+        let response = await axios.get(
           `https://upskilling-egypt.com:3006/api/v1/Recipe/${paramId}`,
           { headers: { Authorization: localStorage.getItem("token") } }
         );
-        console.log("xxx" + response.data?.category[0]?.id)
-       let recipeData= response?.data;
-        setValue("category",response.data?.category[0]?.id )
-        setValue("tagId",response.data.tag.id)
+        let recipeData = response?.data;
+        setValue("categoriesIds", response.data?.category[0]?.id);
+        setValue("tagId", response.data.tag.id);
 
-        setValue("name",recipeData.name)
-        setValue("description",recipeData.description)
-        setValue("modificationDate",recipeData.modificationDate)
-        setValue("price",recipeData.price)
-
+        setValue("name", recipeData.name);
+        setValue("description", recipeData.description);
+        setValue("modificationDate", recipeData.modificationDate);
+        setValue("price", recipeData.price);
       };
 
-      getRecipe()
+      getRecipe();
     }
-  }, []);
+  }, [paramId, setValue]);
 
   return (
     <>
@@ -135,7 +134,7 @@ export default function RecipeForm() {
               <select
                 className="form-select"
                 aria-label="Default select example"
-                {...register("category", { required: "* required field" })}
+                {...register("categoriesIds", { required: "* required field" })}
               >
                 <option value="">category</option>
                 {CategoriesList.map(({ id, name }) => (

@@ -1,3 +1,45 @@
+@charset "utf=8";
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: "Poppins", sans-serif;
+    background-color: #301934;
+}
+
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+    * {
+        scrollbar-width: auto;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 13px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #009247;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-track {
+    background-color: #1F263E;
+}
+
+::-webkit-scrollbar-button {
+    background-color: #1F263E;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: top;
+}
+
 h1 {
     text-align: center;
 }
@@ -31,7 +73,8 @@ form .input-group-text.bg-gray {
     width: 40px;
 }
 
-.form-control:focus {
+.form-control:focus,
+.form-select:focus {
     border-color: #4aa35a !important;
     box-shadow: 0 0 0 .25rem rgb(74 163 90 / 25%) !important;
 }
@@ -74,7 +117,7 @@ ul.css-ewdv3l li:first-child a:hover {
 
 .header {
     background-color: #009247;
-    min-height: 160px;
+    min-height: 300px;
     border-radius: 10px;
     background-size: cover;
     background-image: url("assets/bg.svg");
@@ -133,7 +176,7 @@ thead th {
     background: #F1FFF0 !important;
     padding: 50px;
     border: 1px solid #009247;
-    border-style:dashed;
+    border-style: dashed;
 
 }
 
@@ -143,30 +186,115 @@ thead th {
     overflow: hidden;
     display: inline-block;
     width: 100%;
-  }
+}
 
-  .upload-btn-wrapper .btn {
+.upload-btn-wrapper .btn {
     background: #F1FFF0 !important;
     padding: 10px 0 10px 0;
     border: 1px solid #009247;
     border-style: dashed;
     width: 100%;
-  }
+}
 
-  .upload-btn-wrapper .btn:before {
-    content: "\e09a";  /* this is your text. You can also use UTF-8 character codes as I do here */
+
+
+.upload-btn-wrapper .btn:before {
+    content: "\e09a";
+    /* this is your text. You can also use UTF-8 character codes as I do here */
     font-family: FontAwesome;
-    left:20px;
-    position:absolute;
-    top:0;
-    top:10px;
-    color:#009247
- }
+    left: 20px;
+    position: absolute;
+    top: 0;
+    top: 10px;
+    color: #009247
+}
 
-  .upload-btn-wrapper input[type=file] {
+.upload-btn-wrapper input[type=file] {
     font-size: 100px;
     position: absolute;
     left: 0;
-    top: 0;
+    top: 0px;
     opacity: 0;
-  }
+}
+
+.dropbtn {
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    max-width: 50px;
+    z-index: 1;
+    right: 5px;
+}
+
+.dropdown-content span {
+    color: black;
+    padding: 4px 10px;
+    text-decoration: none;
+    display: block;
+    transition: all ease-in-out 0.2s;
+}
+
+.dropdown-content span:hover {
+    transform: scale(1.2);
+}
+
+
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+:focus-visible {
+    outline: none !important;
+    border: none !important;
+}
+
+ .pagination .page-item {
+    border-color: #198754 !important;
+}
+
+.pagination .page-item .page-link {
+    color: #198754 !important;
+}
+
+.active>.page-link,
+.page-link.active {
+    z-index: 3;
+    background-color: #198754 !important;
+}
+
+span.page-link {
+    cursor: pointer;
+}
+
+
+
+li.page-item.active .page-link {
+    color: #ffffff !important;
+    border-color: #198754 !important;
+}
+
+.page-link:focus {
+    box-shadow: none !important;
+}
+
+
+span.page-link:foucs {
+    background: red !important;
+}
+
+li.page-item span.page-link:hover {
+    background-color: #198754 !important;
+    color: #ffffff !important ;
+} 

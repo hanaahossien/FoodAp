@@ -5,30 +5,40 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { axiosInstance, users } from "../../../../services/apiUrls/apiUrl";
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useNavigation } from "react-router-dom";
+import axios from "axios";
 
 export default function VerifyAccount() {
-const location= useLocation()
+  const location = useLocation();
+
+  const navigatee =useNavigate();
+
+
   let {
     register,
-    formState: { errors ,isSubmitting},
+    formState: { errors, isSubmitting },
     handleSubmit,
-  } = useForm({defaultValues:{email:location.state}});
+  } = useForm({ defaultValues: { email: location.state } });
   let onSubmite = async (data) => {
     try {
-      // let req = await axios.put(
-      //   "https://upskilling-egypt.com:3006/api/v1/Users/verify",
-      //   data
-      // );
-      let req = await axiosInstance.put(users.verifyUser,data)
+      let req = await axios.put(
+        "https://upskilling-egypt.com:3006/api/v1/Users/verify",
+        data
+      );
+      // let req = await axiosInstance.put(users.verifyUser, data);
       console.log(req);
-      console.log(data);
+      navigatee("/Login");
 
       toast.success(req.data.message);
+
+
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.message);
     }
+
   };
+
+
   return (
     <>
       {/* // "email": "nadia.mohamed.taha166@gmail.com",
@@ -101,8 +111,11 @@ const location= useLocation()
                     </div>
                   </div>
 
-                  <button disabled={isSubmitting} className="btn btn-success  w-100 my-3">
-                  {isSubmitting ? "sending ....":"verify"}
+                  <button
+                    disabled={isSubmitting}
+                    className="btn btn-success  w-100 my-3"
+                  >
+                    {isSubmitting ? "sending ...." : "verify"}
                   </button>
                 </form>
               </div>

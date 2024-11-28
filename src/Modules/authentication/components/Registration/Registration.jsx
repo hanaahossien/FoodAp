@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import React from "react";
 
 import { axiosInstance, users } from "../../../../services/apiUrls/apiUrl";
+import axios from "axios";
 
 export default function Registration() {
   // hana88
@@ -41,11 +42,11 @@ export default function Registration() {
 
     try {
       console.log(formata);
-      // let req = await axios.post(
-      //   "https://upskilling-egypt.com:3006/api/v1/Users/Register",
-      //   formata
-      // );
-      let req = await axiosInstance.post(users.createUser, formata);
+      let req = await axios.post(
+        "https://upskilling-egypt.com:3006/api/v1/Users/Register",
+        formata
+      );
+      //let req = await axiosInstance.post(users.createUser, formata);
       console.log(req);
       toast.success(req.data.message);
       navigate("/verify-account", { state: data.email });

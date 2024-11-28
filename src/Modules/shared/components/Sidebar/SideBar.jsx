@@ -3,7 +3,7 @@ import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
 import navlogo from "../../../../assets/navlogo.png";
 export default function SideBar() {
-  let [isCollapsed, setCollapsed] = useState(false);
+  let [isCollapsed, setCollapsed] = useState(true);
 
   let chage = () => {
     console.log(isCollapsed);
@@ -61,7 +61,7 @@ export default function SideBar() {
           </MenuItem>
           <MenuItem
             icon={<i className="fa-solid fa-unlock-keyhole"></i>}
-            component={<Link to="/Reset-Password" />}
+            component={<Link to="/change-password" />}
           >
 
             Change password
